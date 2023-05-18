@@ -1,34 +1,44 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="utf-8">
-        <title>Les Bonnes Pièces</title>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
-        <header>
-            <img src="images/logo-les-bonnes-pieces.png" alt="LOGO">
-            <h1>Les Bonnes Pièces</h1>
-        </header>
-        <main>
-            <!-- Menu de recherche -->
-            <section class="filtres">
-                <h3>Filtres</h3>
-                <button id="trier">trier par prix croissant</button>
-                <br>
-                <button id="btn-filter">filter les pieces non abordables</button>
-                <br>
-                <button id="btn-Nodesc">fliter les piece avec une description</button>
-                <br>
-                <button id="btn-decroissant">Trier par prix decroissant</button>
-            </section>
+	<head>
+		<meta charset="utf-8">
+		<title>Les Bonnes Pièces</title>
+		
+		<link rel="stylesheet" href="styles.css">
+		
+	</head>
+	<body>
+		<header>
+			<img src="images/logo-les-bonnes-pieces.png" alt="LOGO">
+			<h1>Les Bonnes Pièces</h1>
+		</header>
+		<main>
+			<!-- Menu de recherche -->
+			<section class="filtres">
+				<h3>Filtres</h3>
+				<button id="btn-trier">trier par prix croissant</button>
+				<br>
+				<button id="btn-filter">filter les pieces non abordables</button>
+				<br>
+				<button id="btn-Nodesc">fliter les piece avec une description</button>
+				<br>
+				<button id="btn-decroissant">Trier par prix decroissant</button>
+				<br>
+				<p>Prix maximun:</p>
+				<input type="range" name="prix-max" id="prix-max" min="0" max="60" step="5">
+			</section>
 
-            <!-- Fiches produits -->
-            <section id="fiches">
-            </section>
-        </main>
-
+			<!-- Fiches produits -->
+			<section id="fiches">
+				<div id="abordables">
+					<p>pieces abordables</p>
+				</div>
+				<div id="disponible">
+					<p>pieces disponibles</p>
+				</div>
+			</section>
+		</main>
 
 		<script src="pieces.js"></script>
-    </body>
+	</body>
 </html>
