@@ -4,33 +4,33 @@ export function ajoutListenersAvis() {
     const avisElement = document.createElement("p");
     let open = true;
 
-    if (open) {
-
-        for (let i = 0; i < piecesElements.length; i++) {
+    for (let i = 0; i < piecesElements.length; i++) {
  
             piecesElements[i].addEventListener("click", async function (event) {
-               avisElement.innerHTML = "";
-        
-               const id = event.target.dataset.id;
-               const reponse = await fetch("http://localhost:8081/pieces/" + id + "/avis");
-               const avis = await reponse.json();
-               const pieceElement = event.target.parentElement;
-       
-               
-               for (let i = 0; i < avis.length; i++) {
-                   avisElement.innerHTML += `<b>${avis[i].utilisateur}:</b> ${avis[i].commentaire} <br>`;
-               }
-               pieceElement.appendChild(avisElement);
+                if (open) {
+
+                            avisElement.innerHTML = "";
+                        
+                            const id = event.target.dataset.id;
+                            const reponse = await fetch("http://localhost:8081/pieces/" + id + "/avis");
+                            const avis = await reponse.json();
+                            const pieceElement = event.target.parentElement;
+                    
+                            
+                            for (let i = 0; i < avis.length; i++) {
+                                avisElement.innerHTML += `<b>${avis[i].utilisateur}:</b> ${avis[i].commentaire} <br>`;
+                            }
+                            pieceElement.appendChild(avisElement);
+                            open = false;
+                } else {
+                    avisElement.innerHTML = "";
+                    open = true;
+                }
         
             });
         
-        }
-        open = false;
-       
-    } else {
-        avisElement.innerHTML = "";
-        open = true;
     }
+        
  
 }
 
