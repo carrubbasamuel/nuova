@@ -1,6 +1,6 @@
-import { ajoutListenersAvis, ajoutListenerEnvoyerAvis } from "../avis.js";
+import { ajoutListenersAvis, ajoutListenerEnvoyerAvis } from "./avis.js";
 
-
+/* commento vuoto */
 let pieces = localStorage.getItem("pieces");
 if (pieces === null) {
     const reponse = await fetch('http://localhost:8081/pieces/');
