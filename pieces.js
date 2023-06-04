@@ -1,6 +1,11 @@
+import {ajoutListenersAvis, ajoutListenerEnvoyersAvis} from "./avis.js"
+
 async function response() {
-    const response = await fetch("pieces-autos.json");
+    //   const response = await fetch(" http://localhost:8081/pieces");
+
+      const response = await fetch("pieces-autos.json");
     const pieces = await response.json();
+    ajoutListenerEnvoyersAvis();
 
     console.log(pieces);
     return pieces;
@@ -12,6 +17,7 @@ async function response() {
 
 // Fonction qui génère toute la page web
 function generatePieces(pieces) {
+   
     for (let i = 0; i < pieces.length; i++) {
         let article = pieces[i];
         // recuperation de l'element du DOM qui acceuillera les fiches
@@ -35,6 +41,10 @@ function generatePieces(pieces) {
 
         // l’opérateur ternaire pour transformer une valeur en une autre
         stockElement.innerText = article.disponibilite ? "en stock" : "rupture en stock";
+        
+        let avisButon = document.createElement("button");
+        avisButon.dataset.id =article.id;
+        avisButon.textContent = "affichez les avis"
 
         // on rattache la balise article a la section fiche
         sectionFiches.appendChild(pieceElement);
@@ -47,10 +57,11 @@ function generatePieces(pieces) {
         // ajout des elements au DOM
         pieceElement.appendChild(descriptionElement);
         pieceElement.appendChild(stockElement);
+        pieceElement.appendChild(avisButon);
     }
 
     // BOTTONI  
-     // Ajout du listener pour trier les pièces par ordre de prix croissant
+    // Ajout du listener pour trier les pièces par ordre de prix croissant
     let buttonTrier = document.querySelector("#btn-trier");
     buttonTrier.addEventListener("click", () => {
         let piecesordonnees = Array.from(pieces);
@@ -59,7 +70,7 @@ function generatePieces(pieces) {
         });
         console.log(piecesordonnees);
     });
-     // Ajout du listener pour filtrer les pièces non abordables
+    // Ajout du listener pour filtrer les pièces non abordables
     let buttonFiltre = document.querySelector("#btn-filter");
     buttonFiltre.addEventListener("click", function () {
         let piecesFiltrees = pieces.filter(function (piece) {
@@ -75,7 +86,16 @@ function generatePieces(pieces) {
         });
         console.log(piecesFiltrees);
     });
-
+    /* seleziona l'elemento del DOM con l'id "btn-decroissant" e lo memorizza nella variabile buttonDecroissant.
+    buttonDecroissant.addEventListener("click", function () { ... }); 
+    aggiunge un listener per l'evento click sul bottone selezionato. Quando viene cliccato il bottone, 
+    viene eseguita la funzione definita come callback.    
+       let piecesordonnees = Array.from(pieces); crea una copia dell'array pieces utilizzando il metodo Array.from(). 
+       Questo viene fatto per evitare di modificare l'array originale durante l'ordinamento.
+       piecesordonnees.sort(function (a, b) { return b.prix - a.prix; }); 
+       ordina gli elementi dell'array piecesordonnees in base al valore della proprietà prix di ciascun 
+       elemento. La funzione di confronto passata a sort() viene eseguita per confrontare due elementi a e b. 
+       La differenza tra b.prix e a.prix determina l'ordine decrescente, in modo che gli elementi con un valore prix maggiore vengano posizionati prima.**/
     let buttonDecroissant = document.querySelector("#btn-decroissant");
     buttonDecroissant.addEventListener("click", function () {
         let piecesordonnees = Array.from(pieces);
@@ -101,12 +121,20 @@ function generatePieces(pieces) {
         abordablesElement.appendChild(nomElement);
 
     }
+    
     document.querySelector("#abordables").appendChild(abordablesElement);
+    // il metodo map() sugli elementi dell'array pieces per creare due nuovi array: nomDisponibles e prixDisponibles.
+  /*  let prixDisponibles = pieces.map(piece => piece.prix); crea un nuovo array prixDisponibles 
+    contenente il valore della proprietà prix di ciascun elemento dell'array pieces. 
+    In modo simile a prima, viene utilizzata una funzione di callback arrow (piece => piece.prix) 
+    per estrarre il valore della proprietà prix da ciascun oggetto piece in pieces e creare un nuovo array con questi valori.**/
 
     let nomDisponibles = pieces.map(piece => piece.nom);
     let prixDisponibles = pieces.map(piece => piece.prix);
 
-    for (let i = pieces.length - 1; i >= 0; i--) {
+    // In sostanza, questo codice rimuove gli elementi corrispondenti dall'array nomDisponibles 
+    // e prixDisponibles se la proprietà disponibilite dell'elemento corrente nell'array pieces è impostata su false.
+     for (let i = pieces.length - 1; i >= 0; i--) {
         if (pieces[i].disponibilite === false) {
             nomDisponibles.splice(i, 1);
             prixDisponibles.splice(i, 1);
@@ -134,6 +162,7 @@ function generatePieces(pieces) {
         document.querySelector("#fiches").innerHTML = "";
         generatePieces(piecesFiltrees);
     })
+     ajoutListenersAvis();
 
 }
 
