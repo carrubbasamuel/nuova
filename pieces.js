@@ -8,10 +8,10 @@ async function response() {
     const pieces = await response.json();
     ajoutListenerEnvoyersAvis();
 =======
-import { ajoutListenersAvis, ajoutListenerEnvoyerAvis } from "../avis.js";
+import { ajoutListenersAvis, ajoutListenerEnvoyerAvis } from "./avis.js";
 >>>>>>> 0e4e2efd8c303a251a4064af593b162f58e53bd3
 
-
+/* commento vuoto */
 let pieces = localStorage.getItem("pieces");
 if (pieces === null) {
     const reponse = await fetch('http://localhost:8081/pieces/');
